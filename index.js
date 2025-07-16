@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -525,19 +524,19 @@ let Data = [
 ];
 
 // ✅ GET كل الناس
-app.get("/", (req, res) => {
+app.get("/people", (req, res) => {
   res.json(Data);
 });
 
-// ✅ GET شخص واحد بالـ ID
-app.get("/hr/:id", (req, res) => {
+// ✅ GET - شخص واحد بالـ ID
+app.get("/people/:id", (req, res) => {
   const person = Data.find((item) => item.id === req.params.id);
   if (!person) return res.status(404).json({ message: "Not Found" });
   res.json(person);
 });
 
-// ✅ SEARCH بالأسم
-app.get("/hr/search", (req, res) => {
+// ✅ GET - Search بالأسم
+app.get("/people/search", (req, res) => {
   const query = req.query.name?.toLowerCase() || "";
   const results = Data.filter((item) =>
     item.name.toLowerCase().includes(query)
@@ -545,36 +544,44 @@ app.get("/hr/search", (req, res) => {
   res.json(results);
 });
 
-// ✅ POST - إضافة عضو جديد
-app.post("/hr", (req, res) => {
+// ✅ POST - إضافة شخص جديد
+app.post("/people", (req, res) => {
   const newPerson = { ...req.body, attendance: false };
   Data.push(newPerson);
   res.status(201).json(newPerson);
 });
 
-// ✅ POST - Confirm الحضور
-app.post("/hr/:id/confirm", (req, res) => {
+// ✅ POST - Confirm Attendance
+app.post("/people/:id/confirm", (req, res) => {
   const person = Data.find((item) => item.id === req.params.id);
   if (!person) return res.status(404).json({ message: "Not Found" });
   person.attendance = true;
   res.status(200).json({ message: "Attendance Confirmed", person });
 });
 
-// ✅ GET الناس اللي حضرت بس
-app.get("/hr/attended", (req, res) => {
+// ✅ POST - Unconfirm Attendance
+app.post("/people/:id/unconfirm", (req, res) => {
+  const person = Data.find((item) => item.id === req.params.id);
+  if (!person) return res.status(404).json({ message: "Not Found" });
+  person.attendance = false;
+  res.status(200).json({ message: "Attendance Unconfirmed", person });
+});
+
+// ✅ GET - الناس اللي حضرت
+app.get("/people/attended", (req, res) => {
   const attendedPeople = Data.filter((item) => item.attendance === true);
   res.json(attendedPeople);
 });
 
-// ✅ DELETE شخص معين بالـ ID
-app.delete("/hr/:id", (req, res) => {
+// ✅ DELETE - حذف شخص من الداتا
+app.delete("/people/:id", (req, res) => {
   Data = Data.filter((item) => item.id !== req.params.id);
   res.status(200).send({ message: "Deleted" });
 });
 
-// ✅ Route رئيسي لو فتحت /
+// ✅ Root API
 app.get("/", (req, res) => {
-  res.send("API is running. Use /hr to get data.");
+  res.send("API is running. Use /people to get data.");
 });
 
 app.listen(PORT, () => {
