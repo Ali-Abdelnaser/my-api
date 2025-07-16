@@ -57,9 +57,27 @@ app.post("/people/:id/unconfirm", (req, res) => {
 
 // ✅ GET - الناس اللي حضرت
 app.get("/people/attended", (req, res) => {
-  const attendedPeople = Data.filter((item) => item.attendance === true);
-  res.json(attendedPeople); // إرجاع كل من حضر
+  // فلترة المشاركين الذين حضروا
+  const confirmed = Data.filter((p) => p.attendance === true); // استخدام filter بدلاً من where
+
+  // إرجاع البيانات
+  const attendedPeople = confirmed.map((p) => {
+    return {
+      'id': p.id,
+      'name': p.name,
+      'email': p.email,
+      'team': p.team,
+      'attendance': p.attendance,
+    };
+  });
+
+  if (attendedPeople.length > 0) {
+    res.status(200).json(attendedPeople); // إذا كان هناك أشخاص حضروا
+  } else {
+    res.status(404).json({ message: "No attended participants found." }); // إذا لم يكن هناك أحد حضر
+  }
 });
+
 
 // ✅ DELETE - حذف شخص من الداتا
 app.delete("/people/:id", (req, res) => {
