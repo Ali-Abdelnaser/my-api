@@ -559,18 +559,6 @@ app.post("/people/:id/confirm", (req, res) => {
   res.status(200).json({ message: "Attendance Confirmed", person });
 });
 // ✅ GET - الناس اللي حضرت (التأكيد)
-app.get("/people/attendedPeople", (req, res) => {
-  const attendedPeople = Data.filter((item) => item.attendance === true);
-
-  // إرجاع الاسم، البريد الإلكتروني، والفريق فقط
-  const simplified = attendedPeople.map(person => ({
-    name: person.name,
-    email: person.email,
-    team: person.team
-  }));
-
-  res.json(simplified);
-});
 
 // ✅ POST - Unconfirm Attendance
 app.post("/people/:id/unconfirm", (req, res) => {
