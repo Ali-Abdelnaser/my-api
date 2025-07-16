@@ -57,12 +57,13 @@ app.post("/people/:id/unconfirm", (req, res) => {
   res.status(200).json({ message: "Attendance Unconfirmed", person });
 });
 
+// ✅ GET - الناس اللي حضرت
 app.get("/people/attended", (req, res) => {
   const attendedPeople = Data.filter((item) => item.attendance === true);
   if (attendedPeople.length > 0) {
-    res.status(404).json(attendedPeople); 
+    res.status(200).json(attendedPeople); // إذا كان هناك أشخاص حضروا
   } else {
-    res.status(200).json({ message: "No attended participants found." }); 
+    res.status(404).json({ message: "No attended participants found." }); // إذا لم يكن هناك أحد حضر
   }
 });
 
@@ -90,7 +91,10 @@ app.get("/people/search", (req, res) => {
 // ✅ Root API
 app.get("/", (req, res) => {
   res.send("API is running. Use /people to get data.");
-});
+});    
+
+
+
 
 // بدء السيرفر
 app.listen(PORT, () => {
