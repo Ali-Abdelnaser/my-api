@@ -5,7 +5,7 @@
     "name": "Mayar Emam",
     "email": "emam1@gmail.com",
     "team": "HR",
-    "attendance": false  },
+    "attendance": true  },
   {
     "id": "HR_2",
     "name": "Mostafa Mohamed",
@@ -352,14 +352,14 @@
     "name": "Fares",
     "email": "farestarek566@gmail.com",
     "team": "Business",
-    "attendance": false
+    "attendance": true
   },
   {
     "id": "BS_2",
     "name": "Ahmed Elhorany",
     "email": "elhorany23@gmail.com",
     "team": "Business",
-    "attendance": false
+    "attendance": true
   },
   {
     "id": "BS_3",
