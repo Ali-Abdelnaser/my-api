@@ -14,7 +14,7 @@ let Data = JSON.parse(fs.readFileSync("data.json", "utf-8"));
 
 // ✅ Save Data to File
 function saveDataToFile() {
-  fs.writeFileSync('data.json', JSON.stringify(Data, null, 2)); // حفظ البيانات المعدلة في الملف
+  fs.writeFileSync("data.json", JSON.stringify(Data, null, 2)); // حفظ البيانات المعدلة في الملف
 }
 
 // ✅ GET - كل الناس
@@ -67,8 +67,6 @@ app.get("/people/attended", (req, res) => {
   }
 });
 
-
-
 app.delete("/people/:id", (req, res) => {
   const personIndex = Data.findIndex((item) => item.id === req.params.id);
   if (personIndex === -1)
@@ -91,10 +89,7 @@ app.get("/people/search", (req, res) => {
 // ✅ Root API
 app.get("/", (req, res) => {
   res.send("API is running. Use /people to get data.");
-});    
-
-
-
+});
 
 // بدء السيرفر
 app.listen(PORT, () => {
