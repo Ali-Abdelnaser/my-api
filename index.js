@@ -340,7 +340,7 @@ let Data = [
     name: "AHMED EHAB",
     email: "ae884904@gmail.com",
     team: "Logistics",
-    attendance: false,
+    attendance: true,
   },
   {
     id: "LO_14",
