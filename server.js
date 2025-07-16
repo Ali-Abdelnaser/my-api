@@ -524,7 +524,7 @@ let Data = [
 ];
 
 // ✅ GET كل الناس
-app.get("/hr", (req, res) => {
+app.get("/", (req, res) => {
   res.json(Data);
 });
 
