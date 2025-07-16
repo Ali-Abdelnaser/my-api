@@ -546,7 +546,7 @@ app.get("/hr/search", (req, res) => {
 
 // ✅ POST - إضافة عضو جديد
 app.post("/hr", (req, res) => {
-  const newPerson = { ...req.body, attended: false };
+  const newPerson = { ...req.body, attendance: false };
   Data.push(newPerson);
   res.status(201).json(newPerson);
 });
@@ -555,13 +555,13 @@ app.post("/hr", (req, res) => {
 app.post("/hr/:id/confirm", (req, res) => {
   const person = Data.find((item) => item.id === req.params.id);
   if (!person) return res.status(404).json({ message: "Not Found" });
-  person.attended = true;
+  person.attendance = true;
   res.status(200).json({ message: "Attendance Confirmed", person });
 });
 
 // ✅ GET الناس اللي حضرت بس
 app.get("/hr/attended", (req, res) => {
-  const attendedPeople = Data.filter((item) => item.attended === true);
+  const attendedPeople = Data.filter((item) => item.attendance === true);
   res.json(attendedPeople);
 });
 
