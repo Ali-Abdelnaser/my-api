@@ -66,9 +66,16 @@ app.post("/people/:id/unconfirm", (req, res) => {
 
 // ✅ GET - الناس اللي حضرت
 app.get("/people/attended", (req, res) => {
-  const attendedPeople = Data.filter((item) => item.attendance === true); // فلترة الناس اللي حضرت
-  res.json(attendedPeople);
+  // التأكد من أن الـ attendance بتساوي true فقط
+  const attendedPeople = Data.filter((item) => item.attendance === true); 
+
+  if (attendedPeople.length > 0) {
+    res.status(200).json(attendedPeople); // إرجاع البيانات اللي حضرت
+  } else {
+    res.status(404).json({ message: "No attended participants found." }); // لو مفيش حد حضر
+  }
 });
+
 
 // ✅ DELETE - حذف شخص من الداتا
 app.delete("/people/:id", (req, res) => {
